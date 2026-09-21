@@ -31,6 +31,18 @@ Because the default is symlinks, `git pull` updates every tool at once. With `--
 
 Project-local use: copy or link a skill folder into `.claude/skills/`, `.codex/skills/` or `.opencode/skills/` inside the project.
 
+### Install into a project with APM
+
+The repo is installable as an [Agent Package Manager](https://microsoft.github.io/apm/) package with no extra manifest. In the consuming project:
+
+```bash
+apm install Lagyamfi/lawrence-skills#v0.2.0 --target claude,codex,opencode
+```
+
+APM records the dependency in `apm.yml`, pins it in `apm.lock.yaml`, and deploys every skill to `.claude/skills/<name>/` and to the converged `.agents/skills/<name>/` directory that Codex, OpenCode, Cursor, Copilot and Gemini read. Pin a tag or commit (`#v0.2.0`, `#<sha>`) so the project does not drift; `apm update` moves the pin. For a private repo, export `GITHUB_TOKEN` (for example `export GITHUB_TOKEN=$(gh auth token)`) before installing. Commit `apm.yml`, `apm.lock.yaml` and the deployed skill directories; `apm_modules/` is git-ignored automatically.
+
+Choose one mechanism per machine for global use (`install.sh` symlinks or `apm install -g`), not both, or the two will fight over the same directories.
+
 ## Add a skill
 
 1. Create `skills/<kebab-name>/SKILL.md` with frontmatter `name` (must equal the folder name) and `description` (what it does and when to use it; this is what the agent matches on).
@@ -43,7 +55,14 @@ Project-local use: copy or link a skill folder into `.claude/skills/`, `.codex/s
 ```bash
 scripts/validate.py                       # structure, frontmatter, links, rule ids
 scripts/validate.py --book API.en.html    # also checks every book anchor (download the book HTML first)
+uvx --from 'git+https://github.com/agentskills/agentskills#subdirectory=skills-ref' skills-ref validate skills/api-design
 ```
+
+The last line is the reference validator from the Agent Skills specification; run it on every skill before tagging a release.
+
+## Release
+
+Tag releases so consumers can pin them: `git tag v0.2.0 && git push --tags`. Bump `metadata.version` in the changed skill's `SKILL.md` in the same commit.
 
 ## Test a skill
 
