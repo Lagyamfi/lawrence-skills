@@ -1,6 +1,6 @@
 # Backward compatibility
 
-What counts as a breaking change, what does not, and the policy defaults recommended by the book. Detailed rules: `rules/03-backward-compatibility.md`.
+What counts as a breaking change, what does not, and the policy defaults recommended by the book. Detailed rules: `rules-03-backward-compatibility.md`.
 
 ## Breaking vs non-breaking
 Book: https://twirl.github.io/The-API-Book/API.en.html#back-compat-statement and https://twirl.github.io/The-API-Book/API.en.html#back-compat-serenity-notepad

@@ -1,6 +1,11 @@
 ---
 name: api-design
 description: Design a new API or review an existing one against the rules distilled from "The API" book by Sergey Konstantinov. Use when asked to design, structure, name, version, document or evaluate an HTTP/JSON API, SDK, webhook or event contract, or when asked whether an API change is backward compatible. Covers naming, errors, idempotency, concurrency, pagination, async operations, notifications, HTTP semantics, compatibility policy, SDK design and API product concerns.
+license: CC-BY-NC-4.0 derivative of "The API" by Sergey Konstantinov; see NOTICE.md
+metadata:
+  author: lagyamfi
+  version: "0.2.0"
+  source: https://twirl.github.io/The-API-Book/
 ---
 
 # API design and review
@@ -14,20 +19,20 @@ Distilled from *The API* by Sergey Konstantinov (CC BY-NC 4.0, https://twirl.git
 | `references/checklist.md` | reviewing an API, or finishing a design (120 yes/no items in sections A-I) |
 | `references/decision-tables.md` | choosing a method, status code, error shape, pagination, notification, bulk or partial-update design |
 | `references/compatibility.md` | judging whether a change is breaking; setting a versioning policy |
-| `references/rules/0N-*.md` | you need the *Why* behind a specific rule ID (416 rules) |
-| `references/rules/README.md` | you are writing a report that must cite book chapters: it maps every prefix to its chapter link |
+| `references/rules-0N-*.md` | you need the *Why* behind a specific rule ID (416 rules) |
+| `references/rules-index.md` | you are writing a report that must cite book chapters: it maps every prefix to its chapter link |
 | `references/additions.md` | house rules not in the book (`X` prefix): health endpoints, deprecation headers, gateway errors, warnings, inference-style APIs |
-| `templates/new-api-design-doc.md` | designing a new API (fill it in order) |
-| `templates/api-review-scorecard.md` | reporting a review |
+| `assets/new-api-design-doc.md` | designing a new API (fill it in order) |
+| `assets/api-review-scorecard.md` | reporting a review |
 
 Do not load whole rule files. Each rule is one bullet starting with its ID, so fetch exactly the rules you need:
 
 ```
-grep -h -A0 '^- H38-9:' references/rules/*.md
-grep -h -E '^- (D13-24|P16-2|H37-8):' references/rules/*.md
+grep -h -A0 '^- H38-9:' references/rules-*.md
+grep -h -E '^- (D13-24|P16-2|H37-8):' references/rules-*.md
 ```
 
-Chapter links sit at the top of each chapter section in the rules files and in `references/rules/README.md`, not on the individual bullets.
+Chapter links sit at the top of each chapter section in the rules files and in `references/rules-index.md`, not on the individual bullets.
 
 Notation: a bare prefix such as `H38` means "the chapter as a whole"; `H38-9` is one rule; `P19-1/3` means rules 1 and 3. When reporting a finding, cite the specific rule, not the bare prefix.
 
@@ -56,7 +61,7 @@ Notation: a bare prefix such as `H38` means "the chapter as a whole"; `H38-9` is
 
 ## Procedure A: design a new API
 
-Record answers in `templates/new-api-design-doc.md`. Steps 1-3 are the expensive-to-change decisions; get them confirmed before naming endpoints.
+Record answers in `assets/new-api-design-doc.md`. Steps 1-3 are the expensive-to-change decisions; get them confirmed before naming endpoints.
 
 1. **Field of application (D10).** One paragraph: what situation, for whom, why an API rather than an app, how impact is measured. Two-line "what we do / how we do it". Name the monetisation model and the audience that drives adoption (Q49-Q51).
 2. **Abstraction levels (D11).** List the levels from the consumer's terms down to the raw system, grounded in real capabilities of the layer below. Draw the data flow. Verify no level-skipping, no raw fields leaking upward, each level owns its status, each state-changing verb is defined per level.
@@ -77,7 +82,7 @@ Record answers in `templates/new-api-design-doc.md`. Steps 1-3 are the expensive
 3. Run the fast triage below, then the applicable parts of `references/checklist.md`. Score 0 (absent), 1 (partial), 2 (met) with evidence, not opinion.
 4. Group findings by fix cost, following the book's point that mistakes at higher design levels cost far more to fix than naming (D9-1, D9-2): design-level (needs a major; goes in the serenity notepad), additive (fits a minor), docs-only.
 5. Cite the specific rule ID and its chapter link for every finding. Never cite "not RESTful" as a reason (H34-1); cite the concrete rule. If no book rule covers a real finding, check `references/additions.md`; if still none, report it under "outside the rulebook" rather than forcing a mis-cite.
-6. Report with `templates/api-review-scorecard.md`.
+6. Report with `assets/api-review-scorecard.md`.
 
 Fast triage (the twelve most predictive checks):
 

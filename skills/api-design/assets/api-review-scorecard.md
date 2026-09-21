@@ -1,6 +1,6 @@
 # API Review Scorecard: <API name>
 
-Follows Procedure B in `../SKILL.md`. Score each item 0 (absent), 1 (partial), 2 (met). Items the scope gate rules out are `n/a` and reduce the section maximum; controls delegated to an invisible gateway are `unverifiable` and excluded. Record evidence (a URL, a response sample, a spec line), not opinions. Rule IDs refer to `../references/rules/` and `../references/additions.md` (`X` prefix, house rules).
+Follows Procedure B in `../SKILL.md`. Score each item 0 (absent), 1 (partial), 2 (met). Items the scope gate rules out are `n/a` and reduce the section maximum; controls delegated to an invisible gateway are `unverifiable` and excluded. Record evidence (a URL, a response sample, a spec line), not opinions. Rule IDs refer to `../references/rules-*.md` and `../references/additions.md` (`X` prefix, house rules).
 
 | Scope gate | Answer |
 |---|---|

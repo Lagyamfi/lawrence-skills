@@ -1,12 +1,12 @@
 # Master checklist
 
-Yes/no checks grouped by area. Rule IDs point to `rules/0N-*.md` (same folder), where each rule has a *Why* and a *Check*, plus a link to the book chapter. Score 0 (absent), 1 (partial), 2 (met) when reviewing.
+Yes/no checks grouped by area. Rule IDs point to `rules-0N-*.md` (same folder), where each rule has a *Why* and a *Check*, plus a link to the book chapter. Score 0 (absent), 1 (partial), 2 (met) when reviewing.
 
 Apply the scope gate from `../SKILL.md` first: skip the mutable-entity items in C and E if the API has no mutable, addressable entities; skip D (except the `limit` item) if it has no events or growing lists; skip H if there is no SDK. Mark skipped items `n/a`. Controls delegated to a gateway you cannot inspect (most of F for many services) are `unverifiable`, not 0. Section I items about monetisation, KPIs, support and SLA are answered by the owner, not the code. For inference-style APIs (one heavy pure POST plus metadata GETs) also apply the house rules in `additions.md`.
 
 ## Sections
 
-Each line is a yes/no check. The rule ID points to the full rule (with *Why*) in `rules/`.
+Each line is a yes/no check. The rule ID points to the full rule (with *Why*) in `rules-0N-*.md`.
 
 ### A. Contract, naming and data
 Book: https://twirl.github.io/The-API-Book/API.en.html#api-design-describing-interfaces

@@ -6,9 +6,9 @@ Checks per skill:
   - `name` matches the folder name and is kebab-case
   - description is non-empty and under 1024 characters
   - SKILL.md body is under 500 lines (progressive disclosure: put detail in references/)
-  - every relative Markdown link or backticked path in SKILL.md, references/ and templates/ resolves to a file
+  - every relative Markdown link or backticked path in SKILL.md, references/ and assets/ resolves to a file
   - every http(s) link to the API book anchors an id that exists (only if --book <API.en.html> is given)
-  - rule IDs cited in SKILL.md, checklist and templates are defined in references/rules/*.md (api-design specific)
+  - rule IDs cited in SKILL.md, checklist and templates are defined in references/rules-*.md (api-design specific)
 
 Usage: scripts/validate.py [--book path/to/API.en.html]
 Exit code 1 on any error.
@@ -53,9 +53,9 @@ def check_links(skill_dir):
             if not p.exists():
                 err(f"{f.relative_to(ROOT)}: broken link -> {target}")
         # backticked relative paths ending in .md or / that look like repo paths
-        for target in re.findall(r"`((?:\.\./|references/|templates/|rules/|scripts/)[^`\s]*)`", text):
+        for target in re.findall(r"`((?:\.\./|references/|assets/|rules-|scripts/)[^`\s]*)`", text):
             if any(ch in target for ch in "*<>N"):
-                continue  # glob-like placeholders such as rules/0N-*.md
+                continue  # glob-like placeholders such as rules-0N-*.md
             p = (f.parent / target).resolve()
             if not p.exists():
                 err(f"{f.relative_to(ROOT)}: path in backticks does not exist -> {target}")
@@ -70,17 +70,17 @@ def check_book_anchors(skill_dir, book_html):
 
 
 def check_rule_ids(skill_dir):
-    rules_dir = skill_dir / "references" / "rules"
-    if not rules_dir.exists():
+    rule_files = list((skill_dir / "references").glob("rules-0*.md"))
+    if not rule_files:
         return
     defined = set()
-    for f in rules_dir.glob("*.md"):
+    for f in rule_files:
         defined |= set(re.findall(r"^- ([IDPBHSQ]\d{1,2}-\d{1,2}):", f.read_text(encoding="utf-8"), re.M))
     additions = skill_dir / "references" / "additions.md"
     if additions.exists():
         defined |= set(re.findall(r"^- (X\d{1,3}):", additions.read_text(encoding="utf-8"), re.M))
     cited = {}
-    for f in [skill_dir / "SKILL.md", *(skill_dir / "references").glob("*.md"), *(skill_dir / "templates").glob("*.md")]:
+    for f in [skill_dir / "SKILL.md", *(skill_dir / "references").glob("*.md"), *(skill_dir / "assets").glob("*.md")]:
         if not f.exists():
             continue
         for rid in re.findall(r"\b([IDPBHSQ]\d{1,2}-\d{1,2}|X\d{1,3})\b", f.read_text(encoding="utf-8")):

@@ -1,6 +1,6 @@
 # API Design Document: <API name>
 
-Follows Procedure A in `../SKILL.md`. Fill sections in order; do not name endpoints before Step 3 is agreed. Rule IDs refer to `../references/rules/`.
+Follows Procedure A in `../SKILL.md`. Fill sections in order; do not name endpoints before Step 3 is agreed. Rule IDs refer to `../references/rules-*.md`.
 
 | Field | Value |
 |---|---|

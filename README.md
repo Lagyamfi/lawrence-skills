@@ -1,6 +1,6 @@
 # lawrence-skills
 
-Personal library of agent skills in the [Agent Skills](https://agentskills.io) format: one folder per skill, each with a `SKILL.md` plus optional `references/`, `templates/` and `scripts/`. The same folders work in Claude Code, OpenAI Codex CLI, OpenCode and other tools that read `SKILL.md`.
+Personal library of agent skills in the [Agent Skills](https://agentskills.io) format: one folder per skill, each with a `SKILL.md` plus optional `references/`, `assets/` and `scripts/`. The same folders work in Claude Code, OpenAI Codex CLI, OpenCode and other tools that read `SKILL.md`.
 
 ## Skills
 
@@ -34,7 +34,7 @@ Project-local use: copy or link a skill folder into `.claude/skills/`, `.codex/s
 ## Add a skill
 
 1. Create `skills/<kebab-name>/SKILL.md` with frontmatter `name` (must equal the folder name) and `description` (what it does and when to use it; this is what the agent matches on).
-2. Keep `SKILL.md` under 500 lines. Put detail in `references/`, fill-in documents in `templates/`, helpers in `scripts/`, and tell the agent in `SKILL.md` which file to load when.
+2. Keep `SKILL.md` under 500 lines. Put detail in `references/`, fill-in templates in `assets/`, helpers in `scripts/`, and tell the agent in `SKILL.md` which file to load when.
 3. Stick to portable frontmatter (`name`, `description`). Tool-specific keys are ignored elsewhere.
 4. Run `scripts/validate.py` and re-run `./install.sh`.
 
